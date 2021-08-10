@@ -14,6 +14,12 @@
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
             <!--docker 镜像插件-->
             <plugin>
                 <groupId>com.spotify</groupId>
@@ -29,7 +35,6 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
-                    <dockerHost>http://119.29.18.241:2375/</dockerHost>
                 </configuration>
             </plugin>
         </plugins>
