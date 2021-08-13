@@ -1,42 +1,59 @@
 version: '3'
 services:
   nginx:
-   container_name: v-nginx
-   image: nginx:1.13
-   restart: always
-   ports:
-   - 80:80
-   - 443:443
-   volumes:
-   - ./nginx/conf.d:/etc/nginx/conf.d
-    
+    container_name: v-nginx
+    image: nginx:1.13
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+
+  ## https://hub.docker.com/_/mysql 配置文档
   mysql:
-   container_name: v-mysql
-   image: mysql/mysql-server:5.7
-   environment:
-    MYSQL_DATABASE: test
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_ROOT_HOST: '%'
-   ports:
-   - "3306:3306"
-   restart: always
-    
-#  app:
-#    restart: always
-#    build: ./app
-#    working_dir: /app
-#    volumes:
-#      - ./app:/app
-#      - ~/.m2:/root/.m2
-#    expose:
-#      - "8080"
-#    depends_on:
-#      - nginx
-#      - mysql
-#    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker
-  app:
-   container_name: v-app
-   image: app:latest
-   ports:
-    - "8080:8080"
-   restart: always
+    container_name: v-mysql
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    restart: always
+
+  #  app:
+  #    restart: always
+  #    build: ./app
+  #    working_dir: /app
+  #    volumes:
+  #      - ./app:/app
+  #      - ~/.m2:/root/.m2
+  #    expose:
+  #      - "8080"
+  #    depends_on:
+  #      - nginx
+  #      - mysql
+  #    command: mvn clean spring-boot:run -Dspring-boot.run.profiles=docker
+
+  ## https://spring.io/guides/gs/spring-boot-docker/
+  ## 要在Spring的官方文档里面
+  app1:
+    container_name: v-app1
+    image: app:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    restart: always
+
+
+  app2:
+    container_name: v-app2
+    image: app:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8081:8080"
+    restart: always

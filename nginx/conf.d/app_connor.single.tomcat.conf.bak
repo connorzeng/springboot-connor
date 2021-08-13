@@ -2,7 +2,9 @@ server {
     listen 80;
     charset utf-8;
     access_log off;
-
+	
+	
+	## 在docker compose的配置文件中要有app service 
     location / {
         proxy_pass http://app:8080;
         proxy_set_header Host $host:$server_port;
